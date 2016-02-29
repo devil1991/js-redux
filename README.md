@@ -3,10 +3,10 @@ js-redux [![Build Status](https://travis-ci.org/davej/js-redux.svg?branch=master
 
 > Redux bindings for vanilla (no-framework) javascript functions and classes
 
-This is a really simple way to `connect` a function or class with redux and associated actions + store reducers.
+This is a nice way to `connect` a function or class with redux and associated actions + store reducers.
 
-For the moment it's really simple and the main logic is < 40 lines of code.
-It should be easy-to-understand assuming you are already familiar with the [redux](http://redux.js.org/docs/api/createStore.html).
+For the moment, it's really simple and the main logic is < 40 lines of code.
+It should be easy-to-understand assuming you are already familiar with [Redux](http://redux.js.org/docs/api/createStore.html).
 If you have ideas for use-cases that this lib doesn't currently support then just [open an issue](https://github.com/DaveJ/js-redux/issues).
 
 Provide a redux store
