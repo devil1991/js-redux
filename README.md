@@ -9,6 +9,12 @@ For the moment, it's really simple and the main logic is < 40 lines of code.
 It should be easy-to-understand assuming you are already familiar with [Redux](http://redux.js.org/docs/api/createStore.html).
 If you have ideas for use-cases that this lib doesn't currently support then just [open an issue](https://github.com/DaveJ/js-redux/issues).
 
+## Install
+
+```sh
+npm install --save js-redux
+```
+
 ## Provide a redux store
 
 When you `provide` a store then it is provided globally (rather than being an instance).
