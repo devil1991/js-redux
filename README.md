@@ -3,14 +3,13 @@ js-redux [![Build Status](https://travis-ci.org/davej/js-redux.svg?branch=master
 
 > Redux bindings for vanilla (no-framework) javascript functions and classes
 
-This is a nice way to `connect` a function or class with redux and associated actions + store reducers.
+This is a nice way to `connect` a function or class with Redux and associated actions + store reducers.
 
 For the moment, it's really simple and the main logic is < 40 lines of code.
 It should be easy-to-understand assuming you are already familiar with [Redux](http://redux.js.org/docs/api/createStore.html).
 If you have ideas for use-cases that this lib doesn't currently support then just [open an issue](https://github.com/DaveJ/js-redux/issues).
 
-Provide a redux store
----------------------
+## Provide a redux store
 
 When you `provide` a store then it is provided globally (rather than being an instance).
 This is simple and supports my use-cases for the moment but feel free to send a PR if you'd like to add
@@ -26,8 +25,8 @@ const store = createStore(rootReducer, initialState);
 provide(store);
 ```
 
-Option 1: Function syntax
--------------------------
+## Option 1: Function syntax
+
 
 ```js
 import { connect } from 'js-redux';
@@ -48,8 +47,7 @@ export const todos = connect(state => state.todos, todoActions)(_todos)
 todos();
 ```
 
-Option 2: Class syntax
-----------------------
+## Option 2: Class syntax
 
 ```js
 import { connect } from 'js-redux';
@@ -75,3 +73,27 @@ Todos();
 // or
 new Todos();
 ```
+
+## API
+
+### `provide(store)`
+
+Makes the Redux store available to the `connect()` calls below. You can’t use `connect()` without first providing a store for it to use. When you `provide` a store then it is 'provided' globally (rather than being an instance).
+
+#### Arguments
+
+* `store` (*[Redux Store](http://rackt.github.io/redux/docs/api/Store.html)*): The single Redux store in your application.
+
+### `connect([mapStateToProps], [mapDispatchToProps])`
+
+Connects a React component to a Redux store.
+The `connect` API looks the same as `connect` in [`react-redux`](https://github.com/reactjs/react-redux) but it's not, it's far more basic.
+
+It does not modify the class/function passed to it.  
+Instead, it *returns* a new, connected component class, for you to use.
+
+#### Arguments
+
+* [`mapStateToProps(state, [ownProps]): stateProps`] \(*Function*): If specified, the component will subscribe to Redux store updates. Any time it updates, `updated` will be called. Its result must be a plain object. It will be injected as either the first argument (for functions) — or `this.state` property (for classes).
+
+* [`mapDispatchToProps(dispatch, [ownProps]): dispatchProps`] \(*Object*): Each function inside it will be assumed to be a Redux action creator. It injects an object with the same function names, but bound to a Redux store. It will be injected as either the second argument (for functions) — or `this.action` property (for classes).
