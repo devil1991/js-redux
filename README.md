@@ -1,7 +1,7 @@
-js-redux
-========
+js-redux [![Build Status](https://travis-ci.org/davej/js-redux.svg?branch=master)](https://travis-ci.org/davej/js-redux) [![npm version](https://badge.fury.io/js/js-redux.svg)](https://badge.fury.io/js/js-redux)
+=============
 
-> Redux bindings for javascript functions and classes
+> Redux bindings for vanilla (no-framework) javascript functions and classes
 
 This is a really simple way to `connect` a function or class with redux and associated actions + store reducers.
 
