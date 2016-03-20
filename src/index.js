@@ -9,7 +9,9 @@ const defaultMapDispatch = dispatch => ({ dispatch });
 export function provide(store) { currentStore = store; }
 
 export function connect(mapState = defaultMapState, mapDispatch = defaultMapDispatch) {
-  if (typeof mapState !== 'function') { mapState = defaultMapState; }
+  if (typeof mapState !== 'function') {
+    mapState = defaultMapState; // eslint-disable-line no-param-reassign
+  }
   return component => () => {
     if (!currentStore) {
       throw new Error('You cannot use connect unless you `provide` a store');
