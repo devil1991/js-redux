@@ -9,6 +9,7 @@ const defaultMapDispatch = dispatch => ({ dispatch });
 export function provide(store) { currentStore = store; }
 
 export function connect(mapState = defaultMapState, mapDispatch = defaultMapDispatch) {
+  if (typeof mapState !== 'function') { mapState = defaultMapState; }
   return component => () => {
     if (!currentStore) {
       throw new Error('You cannot use connect unless you `provide` a store');
@@ -30,7 +31,9 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
       });
     } else {
       calledComponent = component(currentState, actions);
-      observeStore(currentStore, currentState, mapState, calledComponent.updated);
+      if (calledComponent) {
+        observeStore(currentStore, currentState, mapState, calledComponent.updated);
+      }
     }
     return calledComponent;
   };
