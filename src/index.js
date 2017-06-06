@@ -27,14 +27,14 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
       calledComponent.state = currentState;
       calledComponent.actions = actions;
       if (typeof calledComponent.init === 'function') calledComponent.init();
-      observeStore(currentStore, currentState, mapState, (newState, oldState) => {
+      calledComponent.unsubscribe = observeStore(currentStore, currentState, mapState, (newState, oldState) => {
         calledComponent.state = newState;
         if (typeof calledComponent.updated === 'function') calledComponent.updated(oldState);
       });
     } else {
       calledComponent = component(currentState, actions);
       if (calledComponent) {
-        observeStore(currentStore, currentState, mapState, calledComponent.updated);
+        calledComponent.unsubscribe = observeStore(currentStore, currentState, mapState, calledComponent.updated);
       }
     }
     return calledComponent;
