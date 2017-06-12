@@ -12,7 +12,7 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
   if (typeof mapState !== 'function') {
     mapState = defaultMapState; // eslint-disable-line no-param-reassign
   }
-  return component => () => {
+  return component => {
     if (!currentStore) {
       throw new Error('You cannot use connect unless you `provide` a store');
     }
@@ -23,14 +23,18 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
     let calledComponent;
     if (isClass(component)) {
       const Component = component;
-      calledComponent = new Component();
-      calledComponent.state = currentState;
-      calledComponent.actions = actions;
-      if (typeof calledComponent.init === 'function') calledComponent.init();
-      calledComponent.unsubscribe = observeStore(currentStore, currentState, mapState, (newState, oldState) => {
-        calledComponent.state = newState;
-        if (typeof calledComponent.updated === 'function') calledComponent.updated(oldState);
-      });
+      return class ConnectedClass extends component {
+        constructor (...args) {
+          super(...args)
+          this.state = currentState
+          this.actions = actions
+          this.unsubscribe = observeStore(currentStore, currentState, mapState, (newState, oldState) => {
+            calledComponent.state = newState;
+            if (typeof calledComponent.updated === 'function') calledComponent.updated(oldState);
+          })
+          if (typeof this.init === 'function') this.init()
+        }
+      }
     } else {
       calledComponent = component(currentState, actions);
       if (calledComponent) {
