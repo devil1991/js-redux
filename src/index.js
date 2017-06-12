@@ -29,8 +29,8 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
           this.state = currentState
           this.actions = actions
           this.unsubscribe = observeStore(currentStore, currentState, mapState, (newState, oldState) => {
-            calledComponent.state = newState;
-            if (typeof calledComponent.updated === 'function') calledComponent.updated(oldState);
+            this.state = newState;
+            if (typeof this.updated === 'function') this.updated(oldState);
           })
           if (typeof this.init === 'function') this.init()
         }
