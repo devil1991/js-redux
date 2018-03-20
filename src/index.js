@@ -9,7 +9,7 @@ const defaultMapDispatch = {};
 
 export function provide(store) { currentStore = store; }
 
-export function connect(mapState = defaultMapState, mapDispatch = null) {
+export function connect(mapState = defaultMapState, mapDispatch = []) {
   if (typeof mapState !== 'function') {
     mapState = defaultMapState; // eslint-disable-line no-param-reassign
   }
@@ -18,7 +18,16 @@ export function connect(mapState = defaultMapState, mapDispatch = null) {
       throw new Error('You cannot use connect unless you `provide` a store');
     }
     // Rematch dont need binding of dispatch handlers
-    const actions = dispatch[mapDispatch] ? dispatch[mapDispatch] : defaultMapDispatch;
+    let actions = {}
+    mapDispatch.forEach((modelName) => { 
+      if (!dispatch[modelName]) return null
+      actions = {
+        ...dispatch[modelName],
+        ...actions,
+      }
+      return actions;
+    })
+
     const currentState = mapState(currentStore.getState());
 
     let calledComponent;
