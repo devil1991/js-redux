@@ -1,14 +1,15 @@
-import { observeStore, wrapActionCreators } from './helpers';
+import { observeStore } from './helpers';
 import isClass from 'is-class';
+import { dispatch } from '@rematch/core'
 
 let currentStore;
 
 const defaultMapState = () => ({});
-const defaultMapDispatch = dispatch => ({ dispatch });
+const defaultMapDispatch = {};
 
 export function provide(store) { currentStore = store; }
 
-export function connect(mapState = defaultMapState, mapDispatch = defaultMapDispatch) {
+export function connect(mapState = defaultMapState, mapDispatch = null) {
   if (typeof mapState !== 'function') {
     mapState = defaultMapState; // eslint-disable-line no-param-reassign
   }
@@ -16,8 +17,8 @@ export function connect(mapState = defaultMapState, mapDispatch = defaultMapDisp
     if (!currentStore) {
       throw new Error('You cannot use connect unless you `provide` a store');
     }
-
-    const actions = wrapActionCreators(mapDispatch)(currentStore.dispatch);
+    // Rematch dont need binding of dispatch handlers
+    const actions = dispatch[mapDispatch] ? dispatch[mapDispatch] : defaultMapDispatch;
     const currentState = mapState(currentStore.getState());
 
     let calledComponent;
