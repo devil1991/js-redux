@@ -1,6 +1,5 @@
 import { observeStore } from './helpers';
 import isClass from 'is-class';
-import { dispatch } from '@rematch/core'
 
 let currentStore;
 
@@ -19,6 +18,7 @@ export function connect(mapState = defaultMapState, mapDispatch = []) {
     }
     // Rematch dont need binding of dispatch handlers
     let actions = {}
+    const { dispatch, getState } = currentState
     mapDispatch.forEach((modelName) => { 
       if (!dispatch[modelName]) return null
       actions = {
