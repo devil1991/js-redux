@@ -18,7 +18,7 @@ export function connect(mapState = defaultMapState, mapDispatch = []) {
     }
     // Rematch dont need binding of dispatch handlers
     let actions = {}
-    const { dispatch, getState } = currentState
+    const { dispatch, getState } = currentStore
     mapDispatch.forEach((modelName) => { 
       if (!dispatch[modelName]) return null
       actions = {
